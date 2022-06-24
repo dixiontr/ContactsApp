@@ -4,8 +4,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6FBE9C6A-EAF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{4CD3B3ED-D55D-4235-8128-AE4BFD950510}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsApp.Core", "ContactsApp.Core\ContactsApp.Core.csproj", "{1E06D5E1-88BB-4D1A-A320-CA8467A34D0A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,12 +11,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4CD3B3ED-D55D-4235-8128-AE4BFD950510} = {6FBE9C6A-EAFF-49F3-B1B2-416C43E3DA0B}
-		{1E06D5E1-88BB-4D1A-A320-CA8467A34D0A} = {4CD3B3ED-D55D-4235-8128-AE4BFD950510}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1E06D5E1-88BB-4D1A-A320-CA8467A34D0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1E06D5E1-88BB-4D1A-A320-CA8467A34D0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1E06D5E1-88BB-4D1A-A320-CA8467A34D0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1E06D5E1-88BB-4D1A-A320-CA8467A34D0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
