@@ -5,9 +5,9 @@ namespace ContactsApp.Core.Customs.Exceptions
 {
     public abstract class aBaseException
     {
-        public HttpStatusCode StatusCode { get; set; }
-        public string Message {get;set;}
-        public bool Success {get;set;}
+        public HttpStatusCode StatusCode { get; init; }
+        public string Message {get;init;}
+        public bool Success {get;init;}
 
 
         public BaseResponse HandleException()
