@@ -6,38 +6,36 @@ namespace ContactsApp.Core.Mappers
 {
     public static class AutoMapper
     {
-        public static T AsDto<T>(this IEntity source) where T : IDto, new()
+        public static T AsDto<T>(this IEntity source, IDto target) where T : IDto
         {
             PropertyInfo[] sourceProperties = typeof(IEntity).GetProperties();
             PropertyInfo[] targetProperties = typeof(T).GetProperties();
-            T result = new T();
 
             foreach (PropertyInfo property in targetProperties)
             {
                 if (sourceProperties.Contains(property))
                 {
                     var sourceValue = property.GetValue(source);
-                    property.SetValue(result,sourceValue);
+                    property.SetValue(target,sourceValue);
                 }
             }
-            return result;
+            return (T)target;
         }
         
-        public static T AsEntity<T>(this IDto source) where T : IEntity, new()
+        public static T AsEntity<T>(this IDto source, IEntity target) where T : IEntity
         {
             PropertyInfo[] sourceProperties = typeof(IDto).GetProperties();
             PropertyInfo[] targetProperties = typeof(T).GetProperties();
-            T result = new T();
 
             foreach (PropertyInfo property in targetProperties)
             {
                 if (sourceProperties.Contains(property))
                 {
                     var sourceValue = property.GetValue(source);
-                    property.SetValue(result,sourceValue);
+                    property.SetValue(target,sourceValue);
                 }
             }
-            return result;
+            return (T)target;
         }
     }
 }
