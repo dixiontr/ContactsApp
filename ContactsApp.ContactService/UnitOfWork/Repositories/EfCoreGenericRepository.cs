@@ -4,7 +4,7 @@ using ContactsApp.Core.Interfaces.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace ContactsApp.Core.Repository
+namespace ContactsApp.ContactService.UnitOfWork.Repositories
 {
     public class EfCoreGenericRepository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
     {
