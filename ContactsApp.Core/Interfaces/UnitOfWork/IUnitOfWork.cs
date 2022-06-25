@@ -8,6 +8,7 @@ namespace ContactsApp.Core.Interfaces.UnitOfWork
         Task<IDbContextTransaction> BeginTransactionAsync();
         Task RollbackAsync();
         Task CommitAsync();
+        Task SaveChangesAsync();
 
     }
 
