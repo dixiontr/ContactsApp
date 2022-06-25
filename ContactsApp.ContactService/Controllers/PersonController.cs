@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using ContactsApp.ContactService.DTOs;
 using ContactsApp.ContactService.Entities;
+using ContactsApp.ContactService.Extensions;
 using ContactsApp.ContactService.UnitOfWork;
 using ContactsApp.Core.Customs.Exceptions;
 using ContactsApp.Core.Mappers;
@@ -35,58 +36,27 @@ namespace ContactsApp.ContactService.Controllers
         [HttpGet("{id}")]
         public async Task<BaseResponse> Get(Guid id)
         {
-            Person person = await _unitOfWork.PersonRepository.GetAsyncWithInclude<List<ContactInformation>>(id,x => x.ContactInformations);
+            Person person = await _unitOfWork.PersonRepository
+                                    .GetAsyncWithInclude<List<ContactInformation>>(id,x => x.ContactInformations);
 
             if (person.Equals(default(Person)))
             {
                 return new NotFoundException("Aradığınız Kişi").HandleException();
             }
-            
-            PersonDetailDTO personDto = new PersonDetailDTO()
-            {
-                Id = person.Id,
-                Name = person.Name,
-                Surname = person.Surname,
-                Company = person.Company,
-                CreatedOn = person.CreatedOn,
-                UpdatedOn = person.UpdatedOn,
-                ContactInformations = person.ContactInformations.Select(x => new ContactInformationDTO()
-                {
-                    Id = x.Id,
-                    InformationType = x.InformationType,
-                    Information = x.Information,
-                    CreatedOn = x.CreatedOn,
-                    UpdatedOn = x.UpdatedOn
-                }).ToList()
-            };
+
+            PersonDetailDTO personDetailDto = person.ToPersonDetailDTO();
             
             return new BaseResponse()
             {
-                Data = personDto,
+                Data = personDetailDto,
                 Message = "Kişi başarı ile getirildi.",
             };
         }
 
         [HttpPost]
-        public async Task<BaseResponse> CreateAsync(CreatePersonDTO personDto)
+        public async Task<BaseResponse> CreateAsync(CreatePersonDTO createPersonDto)
         {
-            Person person = new Person()
-            {
-                Id = personDto.Id,
-                Name = personDto.Name,
-                Surname = personDto.Surname,
-                Company = personDto.Company,
-                CreatedOn = personDto.CreatedOn,
-                UpdatedOn = personDto.CreatedOn,
-                ContactInformations = personDto.ContactInformations.Select(x => new ContactInformation()
-                {
-                    Id = x.Id,
-                    InformationType = x.InformationType,
-                    Information = x.Information,
-                    CreatedOn = x.CreatedOn,
-                    UpdatedOn = x.CreatedOn
-                }).ToList()
-            };
+            Person person = createPersonDto.ToPerson();
 
             await _unitOfWork.PersonRepository.CreateAsync(person);
             await _unitOfWork.SaveChangesAsync();
@@ -109,32 +79,7 @@ namespace ContactsApp.ContactService.Controllers
                 return new NotFoundException("Güncellemeye çalıştığınız kişi").HandleException();
             }
 
-            person.Name = personDto.Name;
-            person.Surname = personDto.Surname;
-            person.Company = personDto.Company;
-            person.UpdatedOn = personDto.UpdatedOn;
-
-            foreach (var contactInformationDto in personDto.ContactInformations)
-            {
-                var existingInformation =
-                    person.ContactInformations.FirstOrDefault(i => i.Id == contactInformationDto.Id);
-                if (existingInformation != null)
-                {
-                    existingInformation.Information = contactInformationDto.Information;
-                    existingInformation.InformationType = contactInformationDto.InformationType;
-                    existingInformation.UpdatedOn = contactInformationDto.UpdatedOn;
-                }
-                else
-                {
-                    person.ContactInformations.Add(new ContactInformation()
-                    {
-                        Information = contactInformationDto.Information,
-                        InformationType = contactInformationDto.InformationType,
-                        CreatedOn = contactInformationDto.UpdatedOn
-                    });
-                }
-            }
-
+            person.UpdatePersonByDTO(personDto);
             _unitOfWork.PersonRepository.Update(person);
             await _unitOfWork.SaveChangesAsync();
 
