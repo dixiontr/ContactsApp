@@ -6,6 +6,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{4CD3B3ED-D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsApp.Core", "ContactsApp.Core\ContactsApp.Core.csproj", "{FF4F685C-EE1C-482F-8C19-2EF7D5F4F3F8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsApp.Core.Test", "ContactsApp.Core.Test\ContactsApp.Core.Test.csproj", "{2BFFB879-72D2-4447-AFF1-7E507E178328}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,11 +16,16 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{4CD3B3ED-D55D-4235-8128-AE4BFD950510} = {6FBE9C6A-EAFF-49F3-B1B2-416C43E3DA0B}
 		{FF4F685C-EE1C-482F-8C19-2EF7D5F4F3F8} = {4CD3B3ED-D55D-4235-8128-AE4BFD950510}
+		{2BFFB879-72D2-4447-AFF1-7E507E178328} = {4CD3B3ED-D55D-4235-8128-AE4BFD950510}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FF4F685C-EE1C-482F-8C19-2EF7D5F4F3F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FF4F685C-EE1C-482F-8C19-2EF7D5F4F3F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF4F685C-EE1C-482F-8C19-2EF7D5F4F3F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF4F685C-EE1C-482F-8C19-2EF7D5F4F3F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BFFB879-72D2-4447-AFF1-7E507E178328}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BFFB879-72D2-4447-AFF1-7E507E178328}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BFFB879-72D2-4447-AFF1-7E507E178328}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BFFB879-72D2-4447-AFF1-7E507E178328}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
