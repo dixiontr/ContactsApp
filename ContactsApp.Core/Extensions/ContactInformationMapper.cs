@@ -1,7 +1,7 @@
-﻿using ContactsApp.ContactService.DTOs;
-using ContactsApp.ContactService.Entities;
+﻿using ContactsApp.Core.DTOs;
+using ContactsApp.Core.Entities;
 
-namespace ContactsApp.ContactService.Extensions
+namespace ContactsApp.Core.Extensions
 {
 
     public static class ContactInformationMapper

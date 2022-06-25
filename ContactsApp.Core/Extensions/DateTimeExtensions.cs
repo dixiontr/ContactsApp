@@ -1,4 +1,4 @@
-﻿namespace ContactsApp.ContactService.Extensions
+﻿namespace ContactsApp.Core.Extensions
 {
 
     public static class DateTimeExtensions

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace ContactsApp.ContactService.Extensions
+namespace ContactsApp.Core.Extensions
 {
 
     public static class ModelStateDictionaryExtensions

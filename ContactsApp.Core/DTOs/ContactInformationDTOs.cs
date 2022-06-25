@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using ContactsApp.ContactService.Entities;
-using ContactsApp.ContactService.Extensions;
+using ContactsApp.Core.Entities;
+using ContactsApp.Core.Extensions;
 using ContactsApp.Core.Interfaces.DTO;
 
-namespace ContactsApp.ContactService.DTOs
+namespace ContactsApp.Core.DTOs
 {
-
     public record ContactInformationDTO : IDto
     {
         public Guid Id { get; set; }

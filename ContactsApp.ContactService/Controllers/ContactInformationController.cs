@@ -1,8 +1,9 @@
-﻿using ContactsApp.ContactService.DTOs;
-using ContactsApp.ContactService.Entities;
-using ContactsApp.ContactService.Extensions;
+﻿using ContactsApp.ContactService.Entities;
 using ContactsApp.ContactService.UnitOfWork;
 using ContactsApp.Core.Customs.Exceptions;
+using ContactsApp.Core.DTOs;
+using ContactsApp.Core.Entities;
+using ContactsApp.Core.Extensions;
 using ContactsApp.Core.Wrappers;
 using Microsoft.AspNetCore.Mvc;
 

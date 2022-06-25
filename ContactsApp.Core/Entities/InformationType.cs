@@ -1,4 +1,4 @@
-﻿namespace ContactsApp.ContactService.Entities
+﻿namespace ContactsApp.Core.Entities
 {
 
     public enum InformationType

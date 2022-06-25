@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using ContactsApp.ContactService.Extensions;
+using ContactsApp.Core.DTOs;
+using ContactsApp.Core.Extensions;
 using ContactsApp.Core.Interfaces.DTO;
 
 namespace ContactsApp.ContactService.DTOs

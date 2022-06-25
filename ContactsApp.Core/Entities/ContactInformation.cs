@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using ContactsApp.Core.Interfaces.Entity;
 
-namespace ContactsApp.ContactService.Entities
+namespace ContactsApp.Core.Entities
 {
 
     public class ContactInformation : IEntity

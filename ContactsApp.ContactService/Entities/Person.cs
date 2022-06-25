@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ContactsApp.Core.Entities;
 using ContactsApp.Core.Interfaces.Entity;
 
 namespace ContactsApp.ContactService.Entities

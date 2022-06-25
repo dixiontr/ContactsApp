@@ -13,6 +13,11 @@
 
     <ItemGroup>
       <Folder Include="Controllers" />
+      <Folder Include="Entities" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ContactsApp.Core\ContactsApp.Core.csproj" />
     </ItemGroup>
 
 </Project>

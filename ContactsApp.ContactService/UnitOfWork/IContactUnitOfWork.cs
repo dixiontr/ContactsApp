@@ -1,4 +1,5 @@
 ﻿using ContactsApp.ContactService.Entities;
+using ContactsApp.Core.Entities;
 using ContactsApp.Core.Interfaces.Repository;
 using ContactsApp.Core.Interfaces.UnitOfWork;
 

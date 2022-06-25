@@ -1,4 +1,5 @@
 ﻿using ContactsApp.ContactService.Entities;
+using ContactsApp.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
