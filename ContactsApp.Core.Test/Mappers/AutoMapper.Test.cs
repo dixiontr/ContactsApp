@@ -13,8 +13,8 @@ namespace ContactsApp.Core.Test.Mappers
         private record _testEntity : IEntity
         {
             public Guid Id { get; set; }
-            public DateTimeOffset CreatedOn { get; set; }
-            public DateTimeOffset UpdatedOn { get; set; }
+            public DateTime CreatedOn { get; set; }
+            public DateTime UpdatedOn { get; set; }
             public string Name { get; set; }
             public bool IsActive { get; set; }
             public int Age { get; set; }

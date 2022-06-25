@@ -9,8 +9,8 @@ namespace ContactsApp.ContactService.DTOs
         public Guid Id { get; set; }
         public InformationType InformationType { get; set; }
         public string Information { get; set; }
-        public DateTimeOffset CreatedOn { get; set; }
-        public DateTimeOffset UpdatedOn { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public DateTime UpdatedOn { get; set; }
     }
 
     public record CreateContactInformationDTO : IDto
@@ -19,14 +19,14 @@ namespace ContactsApp.ContactService.DTOs
         public Guid PersonId { get; set; }
         public InformationType InformationType { get; set; }
         public string Information { get; set; }
-        public DateTimeOffset CreatedOn = DateTimeOffset.Now;
+        public DateTime CreatedOn = DateTime.Now;
     }
     public record UpdateContactInformationDTO : IDto
     {
         public Guid Id { get; set; }
         public InformationType InformationType { get; set; }
         public string Information { get; set; }
-        public DateTimeOffset UpdatedOn = DateTimeOffset.Now;
+        public DateTime UpdatedOn = DateTime.Now;
     }
 
     public record DeleteContactInformationDTO : IDto

@@ -8,8 +8,8 @@ namespace ContactsApp.ContactService.Entities
     {
         [Required]
         public Guid Id { get; set; }
-        public DateTimeOffset CreatedOn { get; set; }
-        public DateTimeOffset UpdatedOn { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public DateTime UpdatedOn { get; set; }
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }

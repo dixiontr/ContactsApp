@@ -16,6 +16,7 @@ namespace ContactsApp.Core.Mappers
                 var entityProperty = entityProperties.FirstOrDefault(x => x.Name.Equals(dtoProperty.Name));
                 if (entityProperty != null)
                 {
+                    
                     var sourceValue = entityProperty.GetValue(source);
                     dtoProperty.SetValue(target,sourceValue);
                 }
@@ -23,7 +24,7 @@ namespace ContactsApp.Core.Mappers
             return (T)target;
         }
         
-        public static T AsEntity<T>(this IDto source, IEntity target) where T : IEntity
+        public static T AsEntity<T>(this IDto source, IEntity target ) where T : IEntity
         {
             PropertyInfo[] dtoProperties = source.GetType().GetProperties();
             PropertyInfo[] entityProperties = typeof(T).GetProperties();

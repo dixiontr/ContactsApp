@@ -17,9 +17,9 @@ namespace ContactsApp.ContactService.DTOs
         [MaxLength(250)]
         public string Company { get; set; }
         
-        public DateTimeOffset CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; }
         
-        public DateTimeOffset UpdatedOn { get; set; }
+        public DateTime UpdatedOn { get; set; }
 
         public List<ContactInformationDTO> ContactInformations { get; set; }
     }
@@ -47,9 +47,8 @@ namespace ContactsApp.ContactService.DTOs
         [MaxLength(250)]
         public string Company { get; set; }
         
-        public DateTimeOffset CreatedOn = DateTimeOffset.Now;
-
-        public List<ContactInformationDTO> ContactInformations { get; set; }
+        public DateTime CreatedOn = DateTime.Now;
+        public List<CreateContactInformationDTO> ContactInformations { get; set; }
         
     }
     
@@ -67,9 +66,9 @@ namespace ContactsApp.ContactService.DTOs
         [MaxLength(250)]
         public string Company { get; set; }
         
-        public DateTimeOffset UpdatedOn = DateTimeOffset.Now;
+        public DateTime UpdatedOn = DateTime.Now;
 
-        public List<ContactInformationDTO> ContactInformations { get; set; }
+        public List<UpdateContactInformationDTO> ContactInformations { get; set; }
     }
 
     public record DeletePersonDTO : IDto
