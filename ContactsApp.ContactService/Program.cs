@@ -1,4 +1,7 @@
+using ContactsApp.ContactService.Context;
 using ContactsApp.ContactService.Services;
+using ContactsApp.ContactService.UnitOfWork;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddPostgreSQL(builder.Configuration.GetConnectionString("PostgreSQL"));
+builder.Services.AddScoped<IContactUnitOfWork,UnitOfWork>();
 
 var app = builder.Build();
 

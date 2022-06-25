@@ -1,4 +1,5 @@
-﻿using ContactsApp.ContactService.Entities;
+﻿using ContactsApp.ContactService.Context;
+using ContactsApp.ContactService.Entities;
 using ContactsApp.ContactService.UnitOfWork.Repositories;
 using ContactsApp.Core.Interfaces.Repository;
 using ContactsApp.Core.Interfaces.UnitOfWork;
@@ -10,11 +11,11 @@ namespace ContactsApp.ContactService.UnitOfWork
 
     public class UnitOfWork : IContactUnitOfWork
     {
-        private DbContext _context;
+        private ContactContext _context;
         private ContactInformationRepository _contactInformationRepository;
         private PersonRepository _personRepository;
 
-        public UnitOfWork(DbContext context)
+        public UnitOfWork(ContactContext context)
         {
             _context = context;
         }
