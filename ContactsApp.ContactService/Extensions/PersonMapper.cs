@@ -50,7 +50,8 @@ namespace ContactsApp.ContactService.Extensions
                         Id = contactInformationDto.Id,
                         Information = contactInformationDto.Information,
                         InformationType = contactInformationDto.InformationType,
-                        CreatedOn = contactInformationDto.UpdatedOn
+                        CreatedOn = contactInformationDto.UpdatedOn,
+                        UpdatedOn = contactInformationDto.UpdatedOn
                     });
                 }
             }
@@ -77,7 +78,6 @@ namespace ContactsApp.ContactService.Extensions
                 }).ToList()
             };
         }
-
         public static PersonDTO AsPersonDTO(this Person person)
         {
             return new PersonDTO()
