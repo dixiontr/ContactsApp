@@ -1,4 +1,5 @@
 ﻿using ContactsApp.ContactService.Entities;
+using ContactsApp.ContactService.Extensions;
 using ContactsApp.Core.Interfaces.DTO;
 
 namespace ContactsApp.ContactService.DTOs
@@ -19,14 +20,14 @@ namespace ContactsApp.ContactService.DTOs
         public Guid PersonId { get; set; }
         public InformationType InformationType { get; set; }
         public string Information { get; set; }
-        public DateTime CreatedOn = DateTime.Now;
+        public DateTime CreatedOn = DateTime.Now.SetKindUtc();
     }
     public record UpdateContactInformationDTO : IDto
     {
         public Guid Id { get; set; }
         public InformationType InformationType { get; set; }
         public string Information { get; set; }
-        public DateTime UpdatedOn = DateTime.Now;
+        public DateTime UpdatedOn = DateTime.Now.SetKindUtc();
     }
 
     public record DeleteContactInformationDTO : IDto

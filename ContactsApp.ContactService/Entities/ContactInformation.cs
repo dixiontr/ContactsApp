@@ -11,7 +11,6 @@ namespace ContactsApp.ContactService.Entities
         public DateTime UpdatedOn { get; set; }
         [Required]
         public Guid PersonId { get; set; }
-        public Person Person { get; set; }
         [Required]
         public InformationType InformationType { get; set; }
         [Required]

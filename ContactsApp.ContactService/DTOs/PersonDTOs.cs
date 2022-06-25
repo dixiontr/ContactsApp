@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ContactsApp.ContactService.Extensions;
 using ContactsApp.Core.Interfaces.DTO;
 
 namespace ContactsApp.ContactService.DTOs
 {
-
     public record PersonDetailDTO : IDto
     {
         public Guid Id { get; set; }
@@ -47,7 +47,7 @@ namespace ContactsApp.ContactService.DTOs
         [MaxLength(250)]
         public string Company { get; set; }
         
-        public DateTime CreatedOn = DateTime.Now;
+        public DateTime CreatedOn = DateTime.Now.SetKindUtc();
         public List<CreateContactInformationDTO> ContactInformations { get; set; }
         
     }
@@ -66,7 +66,7 @@ namespace ContactsApp.ContactService.DTOs
         [MaxLength(250)]
         public string Company { get; set; }
         
-        public DateTime UpdatedOn = DateTime.Now;
+        public DateTime UpdatedOn = DateTime.Now.SetKindUtc();
 
         public List<UpdateContactInformationDTO> ContactInformations { get; set; }
     }
