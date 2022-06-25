@@ -5,6 +5,11 @@ namespace ContactsApp.Core.Wrappers
 
     public class BaseResponse : BaseResponse<object>
     {
+        public BaseResponse()
+        {
+            Status = HttpStatusCode.OK;
+            Success = true;
+        }
         
     }
 

@@ -2,6 +2,7 @@
 using ContactsApp.ContactService.DTOs;
 using ContactsApp.ContactService.Entities;
 using ContactsApp.ContactService.UnitOfWork;
+using ContactsApp.Core.Customs.Exceptions;
 using ContactsApp.Core.Mappers;
 using ContactsApp.Core.Wrappers;
 using Microsoft.AspNetCore.Mvc;
@@ -26,10 +27,8 @@ namespace ContactsApp.ContactService.Controllers
 
             return new BaseResponse()
             {
-                Status = HttpStatusCode.OK,
                 Data = persons,
                 Message = "Kişiler başarı ile getirildi.",
-                Success = true
             };
         }
 
@@ -38,15 +37,9 @@ namespace ContactsApp.ContactService.Controllers
         {
             Person person = await _unitOfWork.PersonRepository.GetAsyncWithInclude<List<ContactInformation>>(id,x => x.ContactInformations);
 
-            if (object.Equals(person,default(Person)))
+            if (person.Equals(default(Person)))
             {
-                return new BaseResponse()
-                {
-                    Status = HttpStatusCode.NotFound,
-                    Message = "Güncellemeye çalıştığınız kişi bulunamadı. Lütfen tekrar deneyiniz",
-                    Success = false,
-                    Data = id
-                };
+                return new NotFoundException("Aradığınız Kişi").HandleException();
             }
             
             PersonDetailDTO personDto = new PersonDetailDTO()
@@ -69,10 +62,8 @@ namespace ContactsApp.ContactService.Controllers
             
             return new BaseResponse()
             {
-                Status = HttpStatusCode.OK,
                 Data = personDto,
                 Message = "Kişi başarı ile getirildi.",
-                Success = true
             };
         }
 
@@ -102,10 +93,8 @@ namespace ContactsApp.ContactService.Controllers
 
             return new BaseResponse()
             {
-                Status = HttpStatusCode.Created,
                 Data = person,
                 Message = "Kişi başarı ile oluşturuldu.",
-                Success = true
             };
         }
 
@@ -115,15 +104,9 @@ namespace ContactsApp.ContactService.Controllers
             Person person =
                 await _unitOfWork.PersonRepository.GetAsyncWithInclude<List<ContactInformation>>(id,
                     x => x.ContactInformations);
-            if (object.Equals(person,default(Person)))
+            if (person.Equals(default(Person)))
             {
-                return new BaseResponse()
-                {
-                    Status = HttpStatusCode.NotFound,
-                    Message = "Güncellemeye çalıştığınız kişi bulunamadı. Lütfen tekrar deneyiniz",
-                    Success = false,
-                    Data = personDto
-                };
+                return new NotFoundException("Güncellemeye çalıştığınız kişi").HandleException();
             }
 
             person.Name = personDto.Name;
@@ -159,26 +142,16 @@ namespace ContactsApp.ContactService.Controllers
             {
                 Data = person,
                 Message = "Kişi başarı ile güncellendi",
-                Status = HttpStatusCode.Accepted,
-                Success = true
             };
-
-
         }
 
         [HttpDelete("{id}")]
         public async Task<BaseResponse> DeleteAsync(Guid id)
         {
             Person person = await _unitOfWork.PersonRepository.GetAsync(id);
-            if (object.Equals(person,default(Person)))
+            if (person.Equals(default(Person)))
             {
-                return new BaseResponse()
-                {
-                    Status = HttpStatusCode.NotFound,
-                    Message = "Silmeye çalıştığınız kişi bulunamadı. Lütfen tekrar deneyiniz",
-                    Success = false,
-                    Data = id
-                };
+                return new NotFoundException("Silmeye çalıştığınız kişi").HandleException();
             }
 
             _unitOfWork.PersonRepository.Remove(person);
@@ -187,8 +160,6 @@ namespace ContactsApp.ContactService.Controllers
             return new BaseResponse()
             {
                 Message = "Kişi başarı ile silindi",
-                Status = HttpStatusCode.Accepted,
-                Success = true
             }; 
         }
     }
