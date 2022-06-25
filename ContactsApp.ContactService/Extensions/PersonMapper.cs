@@ -6,7 +6,7 @@ namespace ContactsApp.ContactService.Extensions
 
     public static class PersonMapper
     {
-        public static PersonDetailDTO ToPersonDetailDTO(this Person person)
+        public static PersonDetailDTO AsPersonDetailDTO(this Person person)
         {
             return new PersonDetailDTO()
             {
@@ -26,7 +26,6 @@ namespace ContactsApp.ContactService.Extensions
                 }).ToList()
             };
         }
-
         public static Person UpdatePersonByDTO(this Person person, UpdatePersonDTO updatePersonDto)
         {
             person.Name = updatePersonDto.Name;
@@ -58,8 +57,7 @@ namespace ContactsApp.ContactService.Extensions
 
             return person;
         }
-
-        public static Person ToPerson(this CreatePersonDTO createPersonDto)
+        public static Person AsPerson(this CreatePersonDTO createPersonDto)
         {
             return new Person()
             {
@@ -77,6 +75,16 @@ namespace ContactsApp.ContactService.Extensions
                     CreatedOn = x.CreatedOn,
                     UpdatedOn = x.CreatedOn
                 }).ToList()
+            };
+        }
+
+        public static PersonDTO AsPersonDTO(this Person person)
+        {
+            return new PersonDTO()
+            {
+                Id = person.Id,
+                Name = person.Name,
+                Surname = person.Surname
             };
         }
     }

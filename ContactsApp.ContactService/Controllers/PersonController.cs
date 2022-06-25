@@ -24,7 +24,7 @@ namespace ContactsApp.ContactService.Controllers
         public async Task<BaseResponse> Get()
         {
             var persons = await _unitOfWork.PersonRepository
-                                        .GetAllAsync<PersonDTO>(x => x.AsDto<PersonDTO>(new PersonDTO()));
+                                        .GetAllAsync<PersonDTO>(x => x.AsPersonDTO());
 
             return new BaseResponse()
             {
@@ -44,7 +44,7 @@ namespace ContactsApp.ContactService.Controllers
                 return new NotFoundException("Aradığınız Kişi").HandleException();
             }
 
-            PersonDetailDTO personDetailDto = person.ToPersonDetailDTO();
+            PersonDetailDTO personDetailDto = person.AsPersonDetailDTO();
             
             return new BaseResponse()
             {
@@ -56,7 +56,7 @@ namespace ContactsApp.ContactService.Controllers
         [HttpPost]
         public async Task<BaseResponse> CreateAsync(CreatePersonDTO createPersonDto)
         {
-            Person person = createPersonDto.ToPerson();
+            Person person = createPersonDto.AsPerson();
 
             await _unitOfWork.PersonRepository.CreateAsync(person);
             await _unitOfWork.SaveChangesAsync();
