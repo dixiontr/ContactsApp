@@ -36,6 +36,11 @@ namespace ContactsApp.ContactService.Controllers
         [HttpGet("{id}")]
         public async Task<BaseResponse> Get(Guid id)
         {
+            if (id == Guid.Empty)
+            {
+                return new InvalidModelException("Id").HandleException();
+            }
+            
             Person person = await _unitOfWork.PersonRepository
                                     .GetAsyncWithInclude<List<ContactInformation>>(id,x => x.ContactInformations);
 
@@ -56,6 +61,11 @@ namespace ContactsApp.ContactService.Controllers
         [HttpPost]
         public async Task<BaseResponse> CreateAsync(CreatePersonDTO createPersonDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return new InvalidModelException(ModelState.GetErrorMessages()).HandleException();
+            }
+            
             Person person = createPersonDto.AsPerson();
 
             await _unitOfWork.PersonRepository.CreateAsync(person);
@@ -71,6 +81,14 @@ namespace ContactsApp.ContactService.Controllers
         [HttpPut("{id}")]
         public async Task<BaseResponse> UpdateAsync(Guid id,UpdatePersonDTO personDto)
         {
+            if (id == Guid.Empty)
+            {
+                return new InvalidModelException("Id").HandleException();
+            }
+            if (!ModelState.IsValid)
+            {
+                return new InvalidModelException(ModelState.GetErrorMessages()).HandleException();
+            }
             Person person =
                 await _unitOfWork.PersonRepository.GetAsyncWithInclude<List<ContactInformation>>(id,
                     x => x.ContactInformations);
@@ -93,6 +111,10 @@ namespace ContactsApp.ContactService.Controllers
         [HttpDelete("{id}")]
         public async Task<BaseResponse> DeleteAsync(Guid id)
         {
+            if (id == Guid.Empty)
+            {
+                return new InvalidModelException("Id").HandleException();
+            }
             Person person = await _unitOfWork.PersonRepository.GetAsync(id);
             if (person.Equals(default(Person)))
             {

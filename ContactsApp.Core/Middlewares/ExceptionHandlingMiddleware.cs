@@ -20,7 +20,6 @@ namespace ContactsApp.Core.Middlewares
                 response.StatusCode = (int)HttpStatusCode.OK;
                 var result = JsonSerializer.Serialize(new UnhandledException().HandleException());
                 await response.WriteAsync(result);
-
             }
         }
     }

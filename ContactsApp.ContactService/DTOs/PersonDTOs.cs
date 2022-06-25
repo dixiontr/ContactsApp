@@ -7,14 +7,8 @@ namespace ContactsApp.ContactService.DTOs
     public record PersonDetailDTO : IDto
     {
         public Guid Id { get; set; }
-        [Required]
-        [MaxLength(50)]
         public string Name { get; set; }
-        [Required]
-        [MaxLength(50)]
         public string Surname { get; set; }
-        [Required]
-        [MaxLength(250)]
         public string Company { get; set; }
         
         public DateTime CreatedOn { get; set; }
@@ -35,16 +29,16 @@ namespace ContactsApp.ContactService.DTOs
     {
         public Guid Id = Guid.NewGuid();
         
-        [Required]
-        [MaxLength(50)]
+        [Required(ErrorMessage = "İsim alanı, gönderilmesi zorunlu bir alandır.")]
+        [MaxLength(50,ErrorMessage = "İsim 50 karakteri geçemez.")]
         public string Name { get; set; }
         
-        [Required]
-        [MaxLength(50)]
+        [Required(ErrorMessage = "Soyisim alanı, gönderilmesi zorunlu bir alandır.")]
+        [MaxLength(50,ErrorMessage = "Soyisim 50 karakteri geçemez.")]
         public string Surname { get; set; }
         
-        [Required]
-        [MaxLength(250)]
+        [Required(ErrorMessage = "Şirket alanı, gönderilmesi zorunlu bir alandır.")]
+        [MaxLength(250,ErrorMessage = "Şirket 250 karakteri geçemez.")]
         public string Company { get; set; }
         
         public DateTime CreatedOn = DateTime.Now.SetKindUtc();
@@ -54,28 +48,20 @@ namespace ContactsApp.ContactService.DTOs
     
     public record UpdatePersonDTO : IDto
     {
-        [Required]
-        [MaxLength(50)]
+        [Required(ErrorMessage = "İsim alanı, gönderilmesi zorunlu bir alandır.")]
+        [MaxLength(50,ErrorMessage = "İsim 50 karakteri geçemez.")]
         public string Name { get; set; }
         
-        [Required]
-        [MaxLength(50)]
+        [Required(ErrorMessage = "Soyisim alanı, gönderilmesi zorunlu bir alandır.")]
+        [MaxLength(50,ErrorMessage = "Soyisim 50 karakteri geçemez.")]
         public string Surname { get; set; }
         
-        [Required]
-        [MaxLength(250)]
+        [Required(ErrorMessage = "Şirket alanı, gönderilmesi zorunlu bir alandır.")]
+        [MaxLength(250,ErrorMessage = "Şirket 250 karakteri geçemez.")]
         public string Company { get; set; }
         
         public DateTime UpdatedOn = DateTime.Now.SetKindUtc();
 
         public List<UpdateContactInformationDTO> ContactInformations { get; set; }
     }
-
-    public record DeletePersonDTO : IDto
-    {
-        public Guid Id { get; set; }
-    }
-    
-    
-
 }
