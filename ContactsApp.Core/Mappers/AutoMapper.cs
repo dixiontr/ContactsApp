@@ -8,15 +8,16 @@ namespace ContactsApp.Core.Mappers
     {
         public static T AsDto<T>(this IEntity source, IDto target) where T : IDto
         {
-            PropertyInfo[] sourceProperties = typeof(IEntity).GetProperties();
-            PropertyInfo[] targetProperties = typeof(T).GetProperties();
+            PropertyInfo[] entityProperties = source.GetType().GetProperties();
+            PropertyInfo[] dtoProperties = typeof(T).GetProperties();
 
-            foreach (PropertyInfo property in targetProperties)
+            foreach (PropertyInfo dtoProperty in dtoProperties)
             {
-                if (sourceProperties.Contains(property))
+                var entityProperty = entityProperties.FirstOrDefault(x => x.Name.Equals(dtoProperty.Name));
+                if (entityProperty != null)
                 {
-                    var sourceValue = property.GetValue(source);
-                    property.SetValue(target,sourceValue);
+                    var sourceValue = entityProperty.GetValue(source);
+                    dtoProperty.SetValue(target,sourceValue);
                 }
             }
             return (T)target;
@@ -24,15 +25,16 @@ namespace ContactsApp.Core.Mappers
         
         public static T AsEntity<T>(this IDto source, IEntity target) where T : IEntity
         {
-            PropertyInfo[] sourceProperties = typeof(IDto).GetProperties();
-            PropertyInfo[] targetProperties = typeof(T).GetProperties();
+            PropertyInfo[] dtoProperties = source.GetType().GetProperties();
+            PropertyInfo[] entityProperties = typeof(T).GetProperties();
 
-            foreach (PropertyInfo property in targetProperties)
+            foreach (PropertyInfo dtoProperty in dtoProperties)
             {
-                if (sourceProperties.Contains(property))
+                var entityProperty = entityProperties.FirstOrDefault(x => x.Name.Equals(dtoProperty.Name));
+                if (entityProperty != null)
                 {
-                    var sourceValue = property.GetValue(source);
-                    property.SetValue(target,sourceValue);
+                    var sourceValue = dtoProperty.GetValue(source);
+                    entityProperty.SetValue(target,sourceValue);
                 }
             }
             return (T)target;

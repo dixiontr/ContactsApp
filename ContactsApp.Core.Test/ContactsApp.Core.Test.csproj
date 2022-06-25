@@ -21,4 +21,8 @@
         </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ContactsApp.Core\ContactsApp.Core.csproj" />
+    </ItemGroup>
+
 </Project>
