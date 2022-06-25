@@ -14,6 +14,7 @@ namespace ContactsApp.Core.Interfaces.Repository
         Task<T> GetAsync(Expression<Func<T,bool>> filter);
         Task<TResult> GetAsync<TResult>(Expression<Func<T, TResult>> filter);
         Task<T> GetAsyncWithInclude<TProperty>(Expression<Func<T, TProperty>> filter);
+        Task<T> GetAsyncWithInclude<TProperty>(Guid id,Expression<Func<T, TProperty>> filter);
         T Remove(T entity);
         T Update(T entity);
     }

@@ -55,6 +55,12 @@ namespace ContactsApp.Core.Repository
         {
             return _context.Set<TEntity>().Include(filter).FirstOrDefaultAsync();
         }
+
+        public Task<TEntity> GetAsyncWithInclude<TProperty>(Guid id, Expression<Func<TEntity, TProperty>> filter)
+        {
+            return _context.Set<TEntity>().Where(x => x.Id.Equals(id)).Include(filter).FirstOrDefaultAsync();
+        }
+
         public TEntity Remove(TEntity entity)
         {
             return _context.Set<TEntity>().Remove(entity).Entity;

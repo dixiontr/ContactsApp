@@ -38,7 +38,7 @@ namespace ContactsApp.ContactService.Controllers
         [HttpGet("{id}")]
         public BaseResponse Get(Guid id)
         {
-            Person person = _unitOfWork.PersonRepository.GetAsyncWithInclude<List<ContactInformation>>(x => x.ContactInformations).Result;
+            Person person = _unitOfWork.PersonRepository.GetAsyncWithInclude<List<ContactInformation>>(id,x => x.ContactInformations).Result;
 
             PersonDetailDTO personDto = new PersonDetailDTO()
             {
