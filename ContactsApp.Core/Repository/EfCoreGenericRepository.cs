@@ -29,17 +29,32 @@ namespace ContactsApp.Core.Repository
         {
             return _context.Set<TEntity>().Where(filter).ToListAsync();
         }
+        public Task<List<TResult>> GetAllAsync<TResult>(Expression<Func<TEntity, TResult>> filter)
+        {
+            return _context.Set<TEntity>().Select(filter).ToListAsync();
+        }
+        public Task<List<TEntity>> GetAllAsyncWithInclude<TProperty>(Expression<Func<TEntity, TProperty>> filter)
+        {
+            return _context.Set<TEntity>().Include(filter).ToListAsync();
+        }
 
         public Task<TEntity> GetAsync(Guid id)
         {
             return _context.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public Task<TResult> GetAsync<TResult>(Expression<Func<TEntity, TResult>> filter)
+        {
+            return _context.Set<TEntity>().Select(filter).FirstOrDefaultAsync();
+        }
         public Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter)
         {
             return _context.Set<TEntity>().Where(filter).FirstOrDefaultAsync();
         }
-
+        public Task<TEntity> GetAsyncWithInclude<TProperty>(Expression<Func<TEntity, TProperty>> filter)
+        {
+            return _context.Set<TEntity>().Include(filter).FirstOrDefaultAsync();
+        }
         public TEntity Remove(TEntity entity)
         {
             return _context.Set<TEntity>().Remove(entity).Entity;
