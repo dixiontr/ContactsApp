@@ -22,21 +22,14 @@ namespace ContactsApp.ContactService.Controllers
         [HttpPost("{personId}")]
         public async Task<BaseResponse> Create(Guid personId, CreateContactInformationDTO createContactInformationDto)
         {
-            if (personId == Guid.Empty)
-            {
-                return new InvalidModelException("Kişi Id").HandleException();
-            }
-            if (!ModelState.IsValid)
-            {
-                return new InvalidModelException(ModelState.GetErrorMessages()).HandleException();
-            }
+            if (personId == Guid.Empty) return new InvalidModelException("Kişi Id").HandleException();
+            
+            if (!ModelState.IsValid) return new InvalidModelException(ModelState.GetErrorMessages()).HandleException();
             
             Person person = await _unitOfWork.PersonRepository.GetAsync(personId);
             
-            if (person.Equals(default(Person)))
-            {
-                return new NotFoundException("İletişim bilgisi eklemeye çalıştığınız kişi").HandleException();
-            }
+            if (person.Equals(default(Person))) return new NotFoundException("İletişim bilgisi eklemeye çalıştığınız kişi").HandleException();
+            
 
             createContactInformationDto.PersonId = personId;
 
@@ -55,21 +48,13 @@ namespace ContactsApp.ContactService.Controllers
         [HttpPut("{id}")]
         public async Task<BaseResponse> Update(Guid id, UpdateContactInformationDTO updateContactInformationDto)
         {
-            if (id == Guid.Empty)
-            {
-                return new InvalidModelException("Id").HandleException();
-            }
-            if (!ModelState.IsValid)
-            {
-                return new InvalidModelException(ModelState.GetErrorMessages()).HandleException();
-            }
+            if (id == Guid.Empty) return new InvalidModelException("Id").HandleException();
+            
+            if (!ModelState.IsValid) return new InvalidModelException(ModelState.GetErrorMessages()).HandleException();
 
             ContactInformation contactInformation = await _unitOfWork.ContactInformationRepository.GetAsync(id);
             
-            if (contactInformation.Equals(default(ContactInformation)))
-            {
-                return new NotFoundException("Düzenlemek istediğiniz iletişim bilgisi").HandleException();
-            }
+            if (contactInformation.Equals(default(ContactInformation))) return new NotFoundException("Düzenlemek istediğiniz iletişim bilgisi").HandleException();
 
             contactInformation.UpdateContactInformationByDTO(updateContactInformationDto);
 
@@ -86,16 +71,10 @@ namespace ContactsApp.ContactService.Controllers
         [HttpDelete("{id}")]
         public async Task<BaseResponse> Delete(Guid id)
         {
-            if (id == Guid.Empty)
-            {
-                return new InvalidModelException("Id").HandleException();
-            }
+            if (id == Guid.Empty) return new InvalidModelException("Id").HandleException();
 
             ContactInformation contactInformation = await _unitOfWork.ContactInformationRepository.GetAsync(id);
-            if (contactInformation.Equals(default(ContactInformation)))
-            {
-                return new NotFoundException("Silmek istediğiniz iletişim bilgisi").HandleException();
-            }
+            if (contactInformation.Equals(default(ContactInformation))) return new NotFoundException("Silmek istediğiniz iletişim bilgisi").HandleException();
 
             _unitOfWork.ContactInformationRepository.Remove(contactInformation);
             await _unitOfWork.SaveChangesAsync();
