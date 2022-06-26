@@ -11,10 +11,7 @@
     <ItemGroup>
       <PackageReference Include="ClosedXML" Version="0.95.4" />
       <PackageReference Include="Confluent.Kafka" Version="1.9.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\ContactsApp.Core\ContactsApp.Core.csproj" />
+      <PackageReference Include="ContactsApp.Core" Version="1.0.0" />
     </ItemGroup>
 
 </Project>
