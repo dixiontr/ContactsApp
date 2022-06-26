@@ -13,6 +13,15 @@ namespace ContactsApp.Core.DTOs
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
     }
+    public record ContactInformationDetailDTO : IDto
+    {
+        public Guid Id { get; set; }
+        public Guid PersonId { get; set; }
+        public InformationType InformationType { get; set; }
+        public string Information { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public DateTime UpdatedOn { get; set; }
+    }
 
     public record CreateContactInformationDTO : IDto
     {

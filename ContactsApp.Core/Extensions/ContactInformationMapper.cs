@@ -28,6 +28,19 @@ namespace ContactsApp.Core.Extensions
 
             return contactInformation;
         }
+
+        public static ContactInformationDetailDTO AsContactInformationDetailDto(this ContactInformation contactInformation)
+        {
+            return new ContactInformationDetailDTO()
+            {
+                CreatedOn = contactInformation.CreatedOn,
+                Id = contactInformation.Id,
+                Information = contactInformation.Information,
+                InformationType = contactInformation.InformationType,
+                UpdatedOn = contactInformation.UpdatedOn,
+                PersonId = contactInformation.PersonId
+            };
+        }
     }
 
 }

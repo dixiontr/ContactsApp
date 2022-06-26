@@ -20,6 +20,19 @@ namespace ContactsApp.ContactService.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        [HttpGet]
+        public async Task<BaseResponse> Get()
+        {
+            List<ContactInformationDetailDTO> contactInformationDtos = await _unitOfWork.ContactInformationRepository
+                                                                .GetAllWithSelectAsync(x => x.AsContactInformationDetailDto());
+
+            return new BaseResponse()
+            {
+                Data = contactInformationDtos,
+                Message = "İletişim bilgileri başarı ile getirildi."
+            };
+        }
+
         [HttpPost("{personId}")]
         public async Task<BaseResponse> Create(Guid personId, CreateContactInformationDTO createContactInformationDto)
         {
