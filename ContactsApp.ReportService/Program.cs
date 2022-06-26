@@ -1,6 +1,7 @@
 using ContactsApp.Core.Middlewares;
 using ContactsApp.ReportService.Clients;
 using ContactsApp.ReportService.Services;
+using ContactsApp.ReportService.Settings;
 using ContactsApp.ReportService.UnitOfWork;
 using Serilog;
 using Serilog.Events;
@@ -27,6 +28,8 @@ try
     builder.Services.AddMongoDB();
     builder.Services.AddScoped<IReportUnitOfWork, UnitOfWork>();
     builder.Services.AddScoped<UseExceptionHandlingMiddleware>();
+
+    var kafkaSettings = builder.Configuration.GetSection(nameof(KafkaSetting)).Get<KafkaSetting>();
 
     builder.Services.AddHttpClient<ContactClient>(client =>
     {
