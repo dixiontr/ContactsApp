@@ -1,4 +1,5 @@
 using ContactsApp.ReportService.Services;
+using ContactsApp.ReportService.UnitOfWork;
 using Serilog;
 using Serilog.Events;
 
@@ -22,6 +23,7 @@ try
     builder.Services.AddSwaggerGen();
 
     builder.Services.AddMongoDB();
+    builder.Services.AddScoped<IReportUnitOfWork, UnitOfWork>();
 
     var app = builder.Build();
     app.UseSerilogRequestLogging(options =>
