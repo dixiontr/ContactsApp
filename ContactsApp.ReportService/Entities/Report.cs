@@ -2,7 +2,6 @@
 
 namespace ContactsApp.ReportService.Entities
 {
-
     public class Report : IEntity
     {
         public Guid Id { get; set; }
@@ -11,5 +10,4 @@ namespace ContactsApp.ReportService.Entities
         public ReportStatus Status { get; set; }
         public List<ReportData> ReportDatas { get; set; }
     }
-
 }

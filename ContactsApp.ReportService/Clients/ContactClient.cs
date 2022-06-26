@@ -7,8 +7,6 @@ namespace ContactsApp.ReportService.Clients
     public class ContactClient
     {
         private readonly HttpClient _httpClient;
-
-
         public ContactClient(HttpClient httpClient)
         {
             _httpClient = httpClient;
