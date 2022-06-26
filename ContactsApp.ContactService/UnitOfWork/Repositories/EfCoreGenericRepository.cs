@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace ContactsApp.ContactService.UnitOfWork.Repositories
 {
-    public class EfCoreGenericRepository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
+    public class EfCoreGenericRepository<TEntity> : IEfCoreRepository<TEntity> where TEntity : class, IEntity
     {
         private DbContext _context;
         public EfCoreGenericRepository(DbContext context)
@@ -29,11 +29,11 @@ namespace ContactsApp.ContactService.UnitOfWork.Repositories
         {
             return _context.Set<TEntity>().Where(filter).ToListAsync();
         }
-        public Task<List<TResult>> GetAllAsync<TResult>(Expression<Func<TEntity, TResult>> filter)
+        public Task<List<TResult>> GetAllWithSelectAsync<TResult>(Expression<Func<TEntity, TResult>> filter)
         {
             return _context.Set<TEntity>().Select(filter).ToListAsync();
         }
-        public Task<List<TEntity>> GetAllAsyncWithInclude<TProperty>(Expression<Func<TEntity, TProperty>> filter)
+        public Task<List<TEntity>> GetAllWithIncludeAsync<TProperty>(Expression<Func<TEntity, TProperty>> filter)
         {
             return _context.Set<TEntity>().Include(filter).ToListAsync();
         }
@@ -42,21 +42,22 @@ namespace ContactsApp.ContactService.UnitOfWork.Repositories
         {
             return _context.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id);
         }
-
-        public Task<TResult> GetAsync<TResult>(Expression<Func<TEntity, TResult>> filter)
-        {
-            return _context.Set<TEntity>().Select(filter).FirstOrDefaultAsync();
-        }
         public Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter)
         {
             return _context.Set<TEntity>().Where(filter).FirstOrDefaultAsync();
         }
-        public Task<TEntity> GetAsyncWithInclude<TProperty>(Expression<Func<TEntity, TProperty>> filter)
+
+        public Task<TResult> GetWithSelectAsync<TResult>(Expression<Func<TEntity, TResult>> filter)
+        {
+            return _context.Set<TEntity>().Select(filter).FirstOrDefaultAsync();
+        }
+        
+        public Task<TEntity> GetWithIncludeAsync<TProperty>(Expression<Func<TEntity, TProperty>> filter)
         {
             return _context.Set<TEntity>().Include(filter).FirstOrDefaultAsync();
         }
 
-        public Task<TEntity> GetAsyncWithInclude<TProperty>(Guid id, Expression<Func<TEntity, TProperty>> filter)
+        public Task<TEntity> GetWithIncludeAsync<TProperty>(Guid id, Expression<Func<TEntity, TProperty>> filter)
         {
             return _context.Set<TEntity>().Where(x => x.Id.Equals(id)).Include(filter).FirstOrDefaultAsync();
         }

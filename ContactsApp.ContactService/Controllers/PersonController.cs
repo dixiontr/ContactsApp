@@ -25,7 +25,7 @@ namespace ContactsApp.ContactService.Controllers
         public async Task<BaseResponse> Get()
         {
             var persons = await _unitOfWork.PersonRepository
-                                        .GetAllAsync<PersonDTO>(x => x.AsPersonDTO());
+                                        .GetAllWithSelectAsync<PersonDTO>(x => x.AsPersonDTO());
 
             return new BaseResponse()
             {
@@ -40,7 +40,7 @@ namespace ContactsApp.ContactService.Controllers
             if (id == Guid.Empty) return new InvalidModelException("Id").HandleException();
             
             Person person = await _unitOfWork.PersonRepository
-                                    .GetAsyncWithInclude<List<ContactInformation>>(id,x => x.ContactInformations);
+                                    .GetWithIncludeAsync<List<ContactInformation>>(id,x => x.ContactInformations);
 
             if (person.Equals(default(Person))) return new NotFoundException("Aradığınız Kişi").HandleException();
 
@@ -78,7 +78,7 @@ namespace ContactsApp.ContactService.Controllers
             if (!ModelState.IsValid) return new InvalidModelException(ModelState.GetErrorMessages()).HandleException();
            
             Person person =
-                await _unitOfWork.PersonRepository.GetAsyncWithInclude<List<ContactInformation>>(id,
+                await _unitOfWork.PersonRepository.GetWithIncludeAsync<List<ContactInformation>>(id,
                     x => x.ContactInformations);
             
             

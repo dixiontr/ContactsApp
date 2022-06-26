@@ -40,8 +40,8 @@ namespace ContactsApp.ContactService.UnitOfWork
             return _context.SaveChangesAsync();
         }
 
-        public IRepository<Person> PersonRepository => _personRepository ?? new PersonRepository(_context);
-        public IRepository<ContactInformation> ContactInformationRepository =>
+        public IEfCoreRepository<Person> PersonRepository => _personRepository ?? new PersonRepository(_context);
+        public IEfCoreRepository<ContactInformation> ContactInformationRepository =>
             _contactInformationRepository ?? new ContactInformationRepository(_context);
     }
 
