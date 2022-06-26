@@ -19,7 +19,7 @@ namespace ContactsApp.ReportService.Services
                 var configuration = ServiceProvider.GetService<IConfiguration>();
                 var connectionString = configuration.GetConnectionString("MongoDB");
                 var databaseName = configuration.GetConnectionString("MongoDbDatabaseName");
-                var mongoClient = new MongoClient(connectionString);
+                var mongoClient = new MongoClient($"{connectionString}/{databaseName}");
                 return mongoClient.GetDatabase(databaseName);
             });
             return serviceCollection;
