@@ -1,3 +1,4 @@
+using ContactsApp.ReportService.Services;
 using Serilog;
 using Serilog.Events;
 
@@ -19,6 +20,8 @@ try
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
+
+    builder.Services.AddMongoDB();
 
     var app = builder.Build();
     app.UseSerilogRequestLogging(options =>
