@@ -23,6 +23,7 @@ namespace ContactsApp.ReportService.Extensions
                 Id = report.Id,
                 CreatedOn = report.CreatedOn,
                 Status = report.Status,
+                FileUrl = report.FileUrl,
                 ReportDatas = report.ReportDatas.Select(x => x.AsReportDataDTO()).ToList()
             };
         }

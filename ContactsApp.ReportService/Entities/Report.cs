@@ -8,6 +8,7 @@ namespace ContactsApp.ReportService.Entities
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
         public ReportStatus Status { get; set; }
+        public string FileUrl { get; set; }
         public List<ReportData> ReportDatas { get; set; }
     }
 }

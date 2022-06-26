@@ -1,4 +1,4 @@
-﻿namespace ContactsApp.BackgroundService
+﻿namespace ContactsApp.BackgroundService.Entities
 {
     public enum ReportStatus
     {

@@ -77,6 +77,18 @@ namespace ContactsApp.ReportService.Controller
                 Message = $"{report.CreatedOn} tarihli rapor oluşturma talebiniz işleme alınmıştır."
             };
         }
+
+        [HttpGet("/reports/{id}/{status}")]
+        public async Task UpdateReportStatus(Guid id, ReportStatus status)
+        {
+            Report report = await _unitOfWork.ReportRepository.GetAsync(id);
+
+            if (!report.Equals(default(Report)))
+            {
+                report.Status = status;
+                _unitOfWork.ReportRepository.Update(report);
+            }
+        }
     }
 
 }

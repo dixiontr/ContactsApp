@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using ContactsApp.Core.Entities;
 using ContactsApp.Core.Extensions;
 using ContactsApp.Core.Interfaces.DTO;
@@ -26,6 +27,7 @@ namespace ContactsApp.Core.DTOs
     public record CreateContactInformationDTO : IDto
     {
         public Guid Id = Guid.NewGuid();
+        [AllowNull]
         public Guid PersonId { get; set; }
         [Required(ErrorMessage = "İletişim türü alanı, gönderilmesi zorunlu bir alandır.")]
         public InformationType InformationType { get; set; }

@@ -16,6 +16,7 @@ namespace ContactsApp.ReportService.DTOs
         public Guid Id { get; set; }
         public DateTime CreatedOn { get; set; }
         public ReportStatus Status { get; set; }
+        public string FileUrl { get; set; }
         public List<ReportDataDTO> ReportDatas { get; set; }
     }
 

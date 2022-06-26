@@ -2,6 +2,9 @@
 
 using ContactsApp.BackgroundService;
 using ContactsApp.BackgroundService.Clients;
+using ContactsApp.BackgroundService.Entities;
+using ContactsApp.BackgroundService.Helpers;
+using ContactsApp.BackgroundService.Services;
 
 var consumer = KafkaConsumer.RaiseConsumer();
 
@@ -14,18 +17,27 @@ try
         var response = consumer.Consume(cancellationTokenSource.Token);
         if (response.Message != null)
         {
-            var value = response.Message.Value;
+            var reportId = response.Message.Value;
             
-            Console.WriteLine(value);
             var items = await ContactClient.GetContactInformationsAsync();
 
-            foreach (var item in items)
+            ReportClient.DataPulled(Guid.Parse(reportId));
+
+            List<ReportDataDTO> reportDataDtos = items.ToReportData();
+            
+            Console.WriteLine("*******Started1st*******");
+            foreach (var item in reportDataDtos)
             {
                 Console.WriteLine(item);
-                
             }
-        }
 
+            ReportClient.InProgress(Guid.Parse(reportId));
+
+            var filePath = ExcelReportFileService.BuildFile(reportDataDtos,reportId);
+            
+            Console.WriteLine(filePath);
+            ReportClient.Ready(Guid.Parse(reportId));
+        }
     }
 }
 catch(Exception ex)
