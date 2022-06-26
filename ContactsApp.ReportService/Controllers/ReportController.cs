@@ -1,8 +1,10 @@
-﻿using ContactsApp.Core.Customs.Exceptions;
+﻿using Confluent.Kafka;
+using ContactsApp.Core.Customs.Exceptions;
 using ContactsApp.Core.Wrappers;
 using ContactsApp.ReportService.DTOs;
 using ContactsApp.ReportService.Entities;
 using ContactsApp.ReportService.Extensions;
+using ContactsApp.ReportService.Settings;
 using ContactsApp.ReportService.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,10 +15,12 @@ namespace ContactsApp.ReportService.Controller
     public class ReportController : ControllerBase
     {
         private readonly IReportUnitOfWork _unitOfWork;
+        private readonly IProducer<Null, string> _producer;
 
-        public ReportController(IReportUnitOfWork unitOfWork)
+        public ReportController(IReportUnitOfWork unitOfWork, IProducer<Null, string> producer)
         {
             _unitOfWork = unitOfWork;
+            _producer = producer;
         }
 
         [HttpGet]
@@ -62,7 +66,11 @@ namespace ContactsApp.ReportService.Controller
             };
 
             await _unitOfWork.ReportRepository.CreateAsync(report);
-
+            _producer.ProduceAsync(KafkaTopic.Topic,
+                new Message<Null, string>
+                {
+                    Value = report.Id.ToString()
+                });
             return new BaseResponse()
             {
                 Data = report,
