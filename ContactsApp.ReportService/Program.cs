@@ -1,3 +1,4 @@
+using Confluent.Kafka;
 using ContactsApp.Core.Middlewares;
 using ContactsApp.ReportService.Clients;
 using ContactsApp.ReportService.Services;
@@ -29,7 +30,8 @@ try
     builder.Services.AddScoped<IReportUnitOfWork, UnitOfWork>();
     builder.Services.AddScoped<UseExceptionHandlingMiddleware>();
 
-    var kafkaSettings = builder.Configuration.GetSection(nameof(KafkaSetting)).Get<KafkaSetting>();
+    KafkaSetting kafkaSettings = builder.Configuration.GetSection(nameof(KafkaSetting)).Get<KafkaSetting>();
+    builder.Services.AddKafkaServices(kafkaSettings);
 
     builder.Services.AddHttpClient<ContactClient>(client =>
     {

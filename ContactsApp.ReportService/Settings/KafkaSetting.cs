@@ -9,4 +9,9 @@ namespace ContactsApp.ReportService.Settings
         public string GroupId { get; set; }
         public AutoOffsetReset AutoOffsetReset { get; set; }
     }
+
+    public static class KafkaTopic
+    {
+        public static string Topic { get; set; }
+    }
 }
