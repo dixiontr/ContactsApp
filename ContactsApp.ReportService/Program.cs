@@ -1,3 +1,4 @@
+using ContactsApp.Core.Middlewares;
 using ContactsApp.ReportService.Services;
 using ContactsApp.ReportService.UnitOfWork;
 using Serilog;
@@ -24,6 +25,7 @@ try
 
     builder.Services.AddMongoDB();
     builder.Services.AddScoped<IReportUnitOfWork, UnitOfWork>();
+    builder.Services.AddScoped<UseExceptionHandlingMiddleware>();
 
     var app = builder.Build();
     app.UseSerilogRequestLogging(options =>
@@ -31,18 +33,24 @@ try
         options.MessageTemplate = "HTTP {RequestMethod} {RequestPath} ({UserId}) responded {StatusCode} in {Elapsed:0.0000}ms";
     });
 
+    
+
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
         app.UseSwaggerUI();
     }
+    
+    app.UseMiddleware<UseExceptionHandlingMiddleware>();
 
     app.UseHttpsRedirection();
 
     app.UseAuthorization();
 
     app.MapControllers();
+    
+    
 
     app.Run();
 

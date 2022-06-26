@@ -1,5 +1,6 @@
 using ContactsApp.ContactService.Services;
 using ContactsApp.ContactService.UnitOfWork;
+using ContactsApp.Core.Middlewares;
 using Serilog;
 using Serilog.Events;
 
@@ -26,13 +27,15 @@ try
     builder.Services.AddSwaggerGen();
     builder.Services.AddPostgreSQL(builder.Configuration.GetConnectionString("PostgreSQL"));
     builder.Services.AddScoped<IContactUnitOfWork, UnitOfWork>();
-
+    builder.Services.AddScoped<UseExceptionHandlingMiddleware>();
     var app = builder.Build();
     
     app.UseSerilogRequestLogging(options =>
     {
         options.MessageTemplate = "HTTP {RequestMethod} {RequestPath} ({UserId}) responded {StatusCode} in {Elapsed:0.0000}ms";
     });
+
+    app.UseMiddleware<UseExceptionHandlingMiddleware>();
 
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
