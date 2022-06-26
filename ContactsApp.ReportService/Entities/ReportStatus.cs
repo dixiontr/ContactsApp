@@ -3,6 +3,7 @@
     public enum ReportStatus
     {
         Pending,
+        DataPulled,
         InProgress,
         Ready,
         Failed
