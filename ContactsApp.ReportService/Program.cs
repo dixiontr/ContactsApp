@@ -1,4 +1,5 @@
 using ContactsApp.Core.Middlewares;
+using ContactsApp.ReportService.Clients;
 using ContactsApp.ReportService.Services;
 using ContactsApp.ReportService.UnitOfWork;
 using Serilog;
@@ -26,6 +27,11 @@ try
     builder.Services.AddMongoDB();
     builder.Services.AddScoped<IReportUnitOfWork, UnitOfWork>();
     builder.Services.AddScoped<UseExceptionHandlingMiddleware>();
+
+    builder.Services.AddHttpClient<ContactClient>(client =>
+    {
+        client.BaseAddress = new Uri("https://localhost:7297");
+    });
 
     var app = builder.Build();
     app.UseSerilogRequestLogging(options =>
