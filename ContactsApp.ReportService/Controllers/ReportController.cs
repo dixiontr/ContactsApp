@@ -36,7 +36,7 @@ namespace ContactsApp.ReportService.Controller
                 Data = reportDTOs
             };
         }
-
+        
         [HttpGet("{id}")]
         public async Task<BaseResponse> Get(Guid id)
         {
@@ -54,7 +54,7 @@ namespace ContactsApp.ReportService.Controller
                 Message = "İstediğiniz rapor getirildi"
             };
         }
-
+        
         [HttpGet("create")]
         public async Task<BaseResponse> Create()
         {
@@ -77,7 +77,7 @@ namespace ContactsApp.ReportService.Controller
                 Message = $"{report.CreatedOn} tarihli rapor oluşturma talebiniz işleme alınmıştır."
             };
         }
-
+        
         [HttpGet("/reports/{id}/{status}")]
         public async Task UpdateReportStatus(Guid id, ReportStatus status)
         {
@@ -86,6 +86,19 @@ namespace ContactsApp.ReportService.Controller
             if (!report.Equals(default(Report)))
             {
                 report.Status = status;
+                _unitOfWork.ReportRepository.Update(report);
+            }
+        }
+        
+        [HttpGet("/finishedreport/{id}/{fileName}")]
+        public async Task UpdateReportStatus(Guid id, string fileName)
+        {
+            Report report = await _unitOfWork.ReportRepository.GetAsync(id);
+            if (!report.Equals(default(Report)))
+            {
+                var host = HttpContext.Request.Host.Value;
+                report.Status = ReportStatus.Ready;
+                report.FileUrl = $"https://{host}/report/{fileName}";
                 _unitOfWork.ReportRepository.Update(report);
             }
         }

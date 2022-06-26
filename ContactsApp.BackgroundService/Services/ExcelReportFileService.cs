@@ -14,10 +14,13 @@ namespace ContactsApp.BackgroundService.Services
                 
                 workSheet.Columns().AdjustToContents();
                 workSheet.Rows().AdjustToContents();
+                var directory = Directory.GetCurrentDirectory().Replace("BackgroundService", "ReportService");
                 var filename = $"{DateTime.Now.ToShortDateString()}-{reportId}.xlsx";
-                xlWorkbook.SaveAs(filename);
 
-                return Path.Combine(Directory.GetCurrentDirectory(), filename);
+                var fileDirectory = Path.Combine(directory, "Reports", filename);
+                xlWorkbook.SaveAs(fileDirectory);
+
+                return filename;
             }
         }
     }

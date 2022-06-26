@@ -4,6 +4,7 @@ using ContactsApp.ReportService.Clients;
 using ContactsApp.ReportService.Services;
 using ContactsApp.ReportService.Settings;
 using ContactsApp.ReportService.UnitOfWork;
+using Microsoft.Extensions.FileProviders;
 using Serilog;
 using Serilog.Events;
 
@@ -54,11 +55,18 @@ try
     }
     
     app.UseMiddleware<UseExceptionHandlingMiddleware>();
-
+    
     app.UseHttpsRedirection();
 
     app.UseAuthorization();
-
+    
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new PhysicalFileProvider(
+            Path.Combine(builder.Environment.ContentRootPath, "Reports")),
+        RequestPath = "/report"
+    });
+    
     app.MapControllers();
     
     

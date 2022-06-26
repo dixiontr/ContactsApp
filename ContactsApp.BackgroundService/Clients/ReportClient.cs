@@ -1,4 +1,5 @@
 ﻿using ContactsApp.BackgroundService.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace ContactsApp.BackgroundService.Clients
 {
@@ -22,9 +23,9 @@ namespace ContactsApp.BackgroundService.Clients
         {
             await UpdateReportStatus(id, ReportStatus.InProgress);
         }
-        public static async Task Ready(Guid id)
+        public static async Task Ready(Guid id, string fileName)
         {
-            await UpdateReportStatus(id, ReportStatus.Ready);
+            await _httpClient.GetAsync($"/finishedreport/{id}/{fileName}");
         }
         public static async Task Failed(Guid id)
         {

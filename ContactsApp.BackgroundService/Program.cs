@@ -36,7 +36,7 @@ try
             var filePath = ExcelReportFileService.BuildFile(reportDataDtos,reportId);
             
             Console.WriteLine(filePath);
-            ReportClient.Ready(Guid.Parse(reportId));
+            ReportClient.Ready(Guid.Parse(reportId),filePath);
         }
     }
 }

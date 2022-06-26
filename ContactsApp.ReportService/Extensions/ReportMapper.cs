@@ -17,14 +17,12 @@ namespace ContactsApp.ReportService.Extensions
 
         public static ReportDetailDTO AsReportDetailDTO(this Report report)
         {
-            if (report.ReportDatas == null) report.ReportDatas = new List<ReportData>();
             return new ReportDetailDTO()
             {
                 Id = report.Id,
                 CreatedOn = report.CreatedOn,
                 Status = report.Status,
                 FileUrl = report.FileUrl,
-                ReportDatas = report.ReportDatas.Select(x => x.AsReportDataDTO()).ToList()
             };
         }
 
