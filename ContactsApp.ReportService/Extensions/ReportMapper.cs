@@ -3,7 +3,6 @@ using ContactsApp.ReportService.Entities;
 
 namespace ContactsApp.ReportService.Extensions
 {
-
     public static class ReportMapper
     {
         public static ReportDTO AsReportDTO(this Report report)
@@ -18,6 +17,7 @@ namespace ContactsApp.ReportService.Extensions
 
         public static ReportDetailDTO AsReportDetailDTO(this Report report)
         {
+            if (report.ReportDatas == null) report.ReportDatas = new List<ReportData>();
             return new ReportDetailDTO()
             {
                 Id = report.Id,
