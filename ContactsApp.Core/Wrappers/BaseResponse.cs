@@ -10,7 +10,6 @@ namespace ContactsApp.Core.Wrappers
             Status = HttpStatusCode.OK;
             Success = true;
         }
-        
     }
 
     public class BaseResponse<T>

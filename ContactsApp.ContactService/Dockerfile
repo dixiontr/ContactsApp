@@ -4,7 +4,11 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+
 WORKDIR /src
+COPY "packages/ContactsApp.Core.1.0.1.nupkg" "packages/"
+RUN dotnet nuget add source /src/packages
+
 COPY ["ContactsApp.ContactService/ContactsApp.ContactService.csproj", "ContactsApp.ContactService/"]
 RUN dotnet restore "ContactsApp.ContactService/ContactsApp.ContactService.csproj"
 COPY . .

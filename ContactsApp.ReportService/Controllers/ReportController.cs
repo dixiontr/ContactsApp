@@ -90,15 +90,15 @@ namespace ContactsApp.ReportService.Controller
             }
         }
         
-        [HttpGet("/finishedreport/{id}/{fileName}")]
-        public async Task UpdateReportStatus(Guid id, string fileName)
+        [HttpPost("/finishedreport")]
+        public async Task UpdateReportStatus(ReportUrlDTO dto)
         {
-            Report report = await _unitOfWork.ReportRepository.GetAsync(id);
+            Report report = await _unitOfWork.ReportRepository.GetAsync(dto.Id);
             if (!report.Equals(default(Report)))
             {
                 var host = HttpContext.Request.Host.Value;
                 report.Status = ReportStatus.Ready;
-                report.FileUrl = $"https://{host}/report/{fileName}";
+                report.FileUrl = $"https://{host}/report/{dto.FileUrl}";
                 _unitOfWork.ReportRepository.Update(report);
             }
         }

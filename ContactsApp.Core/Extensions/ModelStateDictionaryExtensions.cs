@@ -2,7 +2,6 @@
 
 namespace ContactsApp.Core.Extensions
 {
-
     public static class ModelStateDictionaryExtensions
     {
         public static List<string> GetErrorMessages(this ModelStateDictionary model)
@@ -14,5 +13,4 @@ namespace ContactsApp.Core.Extensions
         }
 
     }
-
 }

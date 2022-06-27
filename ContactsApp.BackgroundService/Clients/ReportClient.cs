@@ -1,33 +1,51 @@
-﻿using ContactsApp.BackgroundService.Entities;
+﻿using System.Text;
+using System.Text.Json;
+using ContactsApp.BackgroundService.Entities;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace ContactsApp.BackgroundService.Clients
 {
-    public static class ReportClient
+    public class ReportClient
     {
-        private static readonly HttpClient _httpClient = new HttpClient()
+        
+        private readonly HttpClient _httpClient;
+        
+        public ReportClient()
         {
-            BaseAddress = new Uri("https://localhost:7118")
-        };
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+            _httpClient = new HttpClient(clientHandler)
+            {
+                BaseAddress = new Uri("http://reports:80")
+            };
+        }
 
-        public static async Task UpdateReportStatus(Guid id, ReportStatus status)
+        public async Task UpdateReportStatus(Guid id, ReportStatus status)
         {
             await _httpClient.GetAsync($"/reports/{id}/{status}");
         }
 
-        public static async Task DataPulled(Guid id)
+        public async Task DataPulled(Guid id)
         {
             await UpdateReportStatus(id, ReportStatus.DataPulled);
         }
-        public static async Task InProgress(Guid id)
+        public async Task InProgress(Guid id)
         {
             await UpdateReportStatus(id, ReportStatus.InProgress);
         }
-        public static async Task Ready(Guid id, string fileName)
+        public async Task Ready(Guid id, string fileName)
         {
-            await _httpClient.GetAsync($"/finishedreport/{id}/{fileName}");
+            var data = new ReportUrlDTO()
+            {
+                Id = id,
+                FileUrl = fileName
+            };
+            var json = JsonConvert.SerializeObject(data);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            await _httpClient.PostAsync($"/finishedreport",content);
         }
-        public static async Task Failed(Guid id)
+        public async Task Failed(Guid id)
         {
             await UpdateReportStatus(id, ReportStatus.Failed);
         }

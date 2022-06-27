@@ -27,5 +27,10 @@ namespace ContactsApp.ReportService.DTOs
         public int PersonCount { get; set; }
         public int PhoneNumberCount { get; set; }
     }
+    public record ReportUrlDTO : IDto
+    {
+        public Guid Id {get;set;}
+        public string FileUrl {get;set;}
+    }
 
 }

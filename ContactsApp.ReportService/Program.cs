@@ -31,8 +31,7 @@ try
     builder.Services.AddScoped<IReportUnitOfWork, UnitOfWork>();
     builder.Services.AddScoped<UseExceptionHandlingMiddleware>();
 
-    KafkaSetting kafkaSettings = builder.Configuration.GetSection(nameof(KafkaSetting)).Get<KafkaSetting>();
-    builder.Services.AddKafkaServices(kafkaSettings);
+    builder.Services.AddKafkaServices();
 
     builder.Services.AddHttpClient<ContactClient>(client =>
     {

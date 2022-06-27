@@ -9,7 +9,10 @@ namespace ContactsApp.ContactService.Services
         public static IServiceCollection AddPostgreSQL(this IServiceCollection serviceCollection, string connectionString)
         {
             serviceCollection.AddEntityFrameworkNpgsql().AddDbContext<ContactContext>(opt =>
-            opt.UseNpgsql(connectionString));
+            {
+                opt.UseNpgsql(connectionString);
+            }
+            );
 
             return serviceCollection;
         }

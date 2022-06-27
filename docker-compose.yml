@@ -8,7 +8,7 @@ services:
       - 27017:27017
     volumes:
       - mongodbdata:/data/db
-  
+
   postgresqldb:
     image: postgres
     container_name: postgresqldb
@@ -19,7 +19,48 @@ services:
       - 5432:5432
     volumes:
       - postgresdata:/var/lib/postgresql/data
-  
+
+  contact:
+    image: contact
+    build:
+      context: .
+      dockerfile: ./ContactsApp.ContactService/Dockerfile
+    ports:
+      - 4042:80
+    depends_on:
+      - postgresqldb
+      - mongodb
+      - seq
+      - zookeeper
+      - init-kafka
+
+  reports:
+    image: report
+    build:
+      context: .
+      dockerfile: ./ContactsApp.ReportService/Dockerfile
+    ports:
+      - 4043:80
+    depends_on:
+      - contact
+    volumes:
+      - reportdata:/app/ContactsApp.ReportService/Reports
+
+  background:
+    image: background
+    build:
+      context: .
+      dockerfile: ./ContactsApp.BackgroundService/Dockerfile
+    ports:
+      - 4044:80
+    environment:
+      - KAFKA_BOOTSTRAP_SERVER=broker:29092
+      - CONTACT_SERVICE:contact
+    depends_on:
+      - reports
+    volumes:
+      - reportdata:/app/ContactsApp.ReportService/Reports
+
   seq:
     image: datalust/seq
     container_name: seq
@@ -31,7 +72,7 @@ services:
     ports:
       - 81:80
       - 5342:5341
-  
+
   zookeeper:
     image: confluentinc/cp-zookeeper:7.0.1
     container_name: zookeeper
@@ -55,7 +96,25 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
 
+  init-kafka:
+    image: confluentinc/cp-kafka:7.0.1
+    depends_on:
+      - broker
+    entrypoint: [ '/bin/sh', '-c' ]
+    command: |
+      "
+      # blocks until kafka is reachable
+      kafka-topics --bootstrap-server broker:29092 --list
+
+      echo -e 'Creating kafka topics'
+      kafka-topics --bootstrap-server broker:29092 --create --if-not-exists --topic report-request --replication-factor 1 --partitions 1
+
+      echo -e 'Successfully created the following topics:'
+      kafka-topics --bootstrap-server broker:29092 --list
+      "
+
 volumes:
   mongodbdata:
   postgresdata:
   seqdata:
+  reportdata:

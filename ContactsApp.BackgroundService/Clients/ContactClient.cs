@@ -4,13 +4,21 @@ using ContactsApp.Core.Wrappers;
 
 namespace ContactsApp.BackgroundService.Clients
 {
-    public static class ContactClient
+    public class ContactClient
     {
-        private static readonly HttpClient _httpClient = new HttpClient()
+        private readonly HttpClient _httpClient;
+        public ContactClient()
         {
-            BaseAddress = new Uri("https://localhost:7297")
-        };
-        public static async Task<List<ContactInformationDetailDTO>> GetContactInformationsAsync()
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+        
+            _httpClient = new HttpClient(clientHandler)
+            {
+                BaseAddress = new Uri("http://contact:80")
+            };
+            
+        }
+        public async Task<List<ContactInformationDetailDTO>> GetContactInformationsAsync()
         {
             var response = await _httpClient.GetFromJsonAsync<BaseResponse<List<ContactInformationDetailDTO>>>("/contactinformations");
             Console.WriteLine(response.Message);

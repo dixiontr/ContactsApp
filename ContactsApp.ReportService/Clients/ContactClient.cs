@@ -18,5 +18,4 @@ namespace ContactsApp.ReportService.Clients
             return response is null ? response.Data : new List<ContactInformationDetailDTO>();
         }
     }
-
 }

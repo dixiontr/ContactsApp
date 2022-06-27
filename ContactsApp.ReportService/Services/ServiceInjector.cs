@@ -27,32 +27,20 @@ namespace ContactsApp.ReportService.Services
             return serviceCollection;
         }
 
-        public static IServiceCollection AddKafkaServices(this IServiceCollection serviceCollection, KafkaSetting kafkaSettings)
+        public static IServiceCollection AddKafkaServices(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddTransient<IProducer<Null, string>>(serviceProvider =>
             {
-                kafkaSettings = serviceProvider.GetService<IConfiguration>().GetSection(nameof(KafkaSetting)).Get<KafkaSetting>();
-                
+                KafkaSetting kafkaSettings = serviceProvider.GetService<IConfiguration>().GetSection(nameof(KafkaSetting)).Get<KafkaSetting>();
+                KafkaTopic.Topic = kafkaSettings.Topic;
                 var config = new ProducerConfig()
                 {
                     BootstrapServers = kafkaSettings.BoostrapServers,
                 };
                 return new ProducerBuilder<Null, string>(config).Build();
             });
-            serviceCollection.AddTransient<IConsumer<Null, string>>(serviceProvider =>
-            {
-                var config = new ConsumerConfig()
-                {
-                    BootstrapServers = kafkaSettings.BoostrapServers,
-                    GroupId = kafkaSettings.GroupId,
-                    AutoOffsetReset = kafkaSettings.AutoOffsetReset
-                };
-                var consumer = new ConsumerBuilder<Null, string>(config).Build();
-                consumer.Subscribe(kafkaSettings.Topic);
-                return consumer;
-            });
 
-            KafkaTopic.Topic = kafkaSettings.Topic;
+            
 
             return serviceCollection;
         }

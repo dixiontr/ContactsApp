@@ -1,3 +1,4 @@
+using ContactsApp.ContactService.Context;
 using ContactsApp.ContactService.Services;
 using ContactsApp.ContactService.UnitOfWork;
 using ContactsApp.Core.Middlewares;
@@ -29,6 +30,10 @@ try
     builder.Services.AddScoped<IContactUnitOfWork, UnitOfWork>();
     builder.Services.AddScoped<UseExceptionHandlingMiddleware>();
     var app = builder.Build();
+
+    await using var scope = app.Services.CreateAsyncScope();
+    using var db = scope.ServiceProvider.GetService<ContactContext>();
+    await db.Database.EnsureCreatedAsync();
     
     app.UseSerilogRequestLogging(options =>
     {

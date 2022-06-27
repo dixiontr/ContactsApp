@@ -2,14 +2,13 @@
 
 namespace ContactsApp.BackgroundService
 {
-
     public class KafkaConsumer
     {
         public static IConsumer<Null,string> RaiseConsumer()
         {
             var config = new ConsumerConfig()
             {
-                BootstrapServers = "localhost:9092",
+                BootstrapServers = "broker:9092",
                 GroupId = "report-consumer-group",
                 AutoOffsetReset = AutoOffsetReset.Earliest,
             };
@@ -19,10 +18,6 @@ namespace ContactsApp.BackgroundService
             
             return consumer;
         }
-        
-        
-        
-        
     }
 
 }

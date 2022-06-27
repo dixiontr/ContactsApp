@@ -1,12 +1,26 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using Confluent.Kafka;
 using ContactsApp.BackgroundService;
 using ContactsApp.BackgroundService.Clients;
 using ContactsApp.BackgroundService.Entities;
 using ContactsApp.BackgroundService.Helpers;
 using ContactsApp.BackgroundService.Services;
+using ContactsApp.Core.DTOs;
 
-var consumer = KafkaConsumer.RaiseConsumer();
+var config = new ConsumerConfig()
+{
+    BootstrapServers = Environment.GetEnvironmentVariable("KAFKA_BOOTSTRAP_SERVER"),
+    GroupId = "report-consumer-group",
+    AutoOffsetReset = AutoOffsetReset.Earliest,
+    
+};
+
+var consumer = new ConsumerBuilder<Null, string>(config).Build();
+consumer.Subscribe("report-request");
+
+var reportClient = new ReportClient();
+var contactClient = new ContactClient();
 
 CancellationTokenSource cancellationTokenSource =new();
 
@@ -19,24 +33,22 @@ try
         {
             var reportId = response.Message.Value;
             
-            var items = await ContactClient.GetContactInformationsAsync();
+            var items = await contactClient.GetContactInformationsAsync();
 
-            ReportClient.DataPulled(Guid.Parse(reportId));
+            items = items == null ? items : new List<ContactInformationDetailDTO>();
+
+
+            Console.WriteLine("Durum Raporlandı (DataPulled)");
 
             List<ReportDataDTO> reportDataDtos = items.ToReportData();
             
-            Console.WriteLine("*******Started1st*******");
-            foreach (var item in reportDataDtos)
-            {
-                Console.WriteLine(item);
-            }
 
-            ReportClient.InProgress(Guid.Parse(reportId));
+            Console.WriteLine("Durum Raporlandı (InProgress)");
 
             var filePath = ExcelReportFileService.BuildFile(reportDataDtos,reportId);
-            
             Console.WriteLine(filePath);
-            ReportClient.Ready(Guid.Parse(reportId),filePath);
+            reportClient.Ready(Guid.Parse(reportId),filePath);
+            Console.WriteLine("Durum Raporlandı (Ready)");
         }
     }
 }

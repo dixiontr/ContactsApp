@@ -7,5 +7,11 @@
         public int PersonCount { get; set; }
         public int PhoneNumberCount { get; set; }
     }
+    
+    public record ReportUrlDTO
+    {
+        public Guid Id {get;set;}
+        public string FileUrl {get;set;}
+    }
 
 }

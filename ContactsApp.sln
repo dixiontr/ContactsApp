@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsApp.ReportService",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsApp.BackgroundService", "ContactsApp.BackgroundService\ContactsApp.BackgroundService.csproj", "{F7C8F4FF-535F-4157-9A88-78F3EB302904}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsApp.ContactService.Test", "ContactsApp.ContactService.Test\ContactsApp.ContactService.Test.csproj", "{1BA4860F-7051-4C70-88C5-A5B3D474D42B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,7 @@ Global
 		{E4997E10-8DBB-474C-AE07-F4FDABB8CB25} = {6FBE9C6A-EAFF-49F3-B1B2-416C43E3DA0B}
 		{4BD35B49-B950-46AC-A439-C2CA1B92A3AC} = {E4997E10-8DBB-474C-AE07-F4FDABB8CB25}
 		{F7C8F4FF-535F-4157-9A88-78F3EB302904} = {E4997E10-8DBB-474C-AE07-F4FDABB8CB25}
+		{1BA4860F-7051-4C70-88C5-A5B3D474D42B} = {C0C42A3B-9D5E-4B4A-87C8-ACF803262AB0}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FF4F685C-EE1C-482F-8C19-2EF7D5F4F3F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -54,5 +57,9 @@ Global
 		{F7C8F4FF-535F-4157-9A88-78F3EB302904}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7C8F4FF-535F-4157-9A88-78F3EB302904}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7C8F4FF-535F-4157-9A88-78F3EB302904}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BA4860F-7051-4C70-88C5-A5B3D474D42B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BA4860F-7051-4C70-88C5-A5B3D474D42B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BA4860F-7051-4C70-88C5-A5B3D474D42B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BA4860F-7051-4C70-88C5-A5B3D474D42B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

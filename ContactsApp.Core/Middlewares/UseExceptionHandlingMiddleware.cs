@@ -2,11 +2,19 @@
 using System.Text.Json;
 using ContactsApp.Core.Customs.Exceptions;
 using Microsoft.AspNetCore.Http;
+using Serilog;
 
 namespace ContactsApp.Core.Middlewares
 {
     public class UseExceptionHandlingMiddleware : IMiddleware
     {
+        private ILogger _logger;
+
+        public UseExceptionHandlingMiddleware(ILogger logger)
+        {
+            _logger = logger;
+        }
+
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             try
@@ -15,6 +23,7 @@ namespace ContactsApp.Core.Middlewares
             }
             catch (Exception ex)
             {
+                _logger.Error(ex.Message,ex);
                 await HandleErrorFromMiddleware(context);
             }
         }
