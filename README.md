@@ -76,10 +76,14 @@ returns reports list
 #{GET} /reports/{id}
 returns report details
 
-#{POST} /reports
+#{GET} /reports/create
 creates report request
 After the report request is received, the request is adding Kafka Message Queue.
 Report statuses can be checked with /reports endpoint
+
+#/report/{fileUrl}
+downloads the report
+After the report is ready, they can be downloaded with this endpoint.
 ```
 ## TechStack
 * [.Net6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
